@@ -38,57 +38,62 @@ body {
     padding: 0 20px;
    }
 
-   /*Animação suave de entrada (Fade In)*/
-   .home-content {
-    animation: fadeIn 2s ease-in-out;
-   }
+.home-content h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  
+  opacity: 0;
+  animation: cinematicFade 2s ease-out forwards;
+  animation-delay: 1s; 
+}
 
-   .home-content h1 {
-    font-size: 2.5rem;
-    font-weight: 300;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-   }
+.home-content p {
+  font-size: 1.2rem;
+  font-weight: 200;
+  margin-bottom: 40px;
+  
+  opacity: 0;
+  animation: cinematicFade 2s ease-out forwards;
+  animation-delay: 3.5s; 
+}
 
-   .home-content p {
-    font-size: 1.2rem;
-    font-weight: 200;
-    margin-bottom: 40px;
-   }
+.start-button {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 12px 30px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  opacity: 0;
+  animation: cinematicFade 2s ease-out forwards;
+  animation-delay: 6s; 
+}
 
-   /*Botão de "Começar"*/
-   .start-button {
-    background: transparent;
-    color: #ffffff;
-    padding: 12px 30px;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-   }
+.start-button:hover {
+  background: #ffffff;
+  color: #090a0f;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
 
-   /*Efeito de Hover (quando passar o mouse por cima)*/
-   .start-button:hover {
-    background: #ffffff;
-    color: #090a0f;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-   }
-
-    /* Animação de Fade In */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
+@keyframes cinematicFade {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  
     /* =========================================
    FUNDO ESTRELADO (BACKGROUND)
    ========================================= */
@@ -174,5 +179,70 @@ body {
     transform: translate(-50%, -50%) scale(1.2);
     opacity: 1;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* =========================================
+   CONSTELAÇÕES (CICLO VIVO E DESENHO)
+   ========================================= */
+
+.constellation-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; 
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cancer-svg-live {
+  position: absolute;
+  opacity: 0;
+  /* Animação que controla o ciclo de vida (nascer suave, viver, sumir suave) */
+  animation: constellationCycle 6s linear forwards; 
+}
+
+/* A Linha: Animação de desenho orgânico */
+.constellation-path-live {
+  stroke-dasharray: 400; /* Um valor alto para cobrir o traço */
+  stroke-dashoffset: 400; /* Começa invisível */
+  /* Desenha o traço do início ao fim em 2.5s */
+  animation: drawLine 2.5s ease-out forwards; 
+  /* Começa a desenhar só depois que o SVG aparecer no fade (0.5s de delay) */
+  animation-delay: 0.5s; 
+}
+
+/* As Estrelas: Brilho e Fade sincronizado */
+.draw-star-live {
+  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 1));
+  opacity: 0;
+  /* Elas aparecem devagar enquanto a linha é desenhada */
+  animation: starAppear 1.5s ease-in forwards;
+  animation-delay: 1s; 
+}
+
+/* --- KEYFRAMES (As regras matemáticas das animações) --- */
+
+/* Ciclo de vida: Fade-In (0s a 0.5s), Visível (0.5s a 4.5s), Fade-Out (4.5s a 6s) */
+@keyframes constellationCycle {
+  0% { opacity: 0; }
+  8% { opacity: 1; }   /* Fade-in em ~0.5s */
+  75% { opacity: 1; }  /* Fica estável e visível até 4.5s */
+  100% { opacity: 0; } /* Fade-out até 6s */
+}
+
+/* Animação de desenho: Move o offset de 400 para 0, revelando a linha */
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Animação das estrelas: Fade-In simples */
+@keyframes starAppear {
+  to {
+    opacity: 1;
   }
 }

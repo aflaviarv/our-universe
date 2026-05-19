@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Home } from './pages/Home';
 import { Universe } from './pages/Universe';
 import { BackgroundStars } from './components/BackgroundStars';
-import { CometTrail } from './components/CometTrail'; // <-- Importou aqui
+import { CometTrail } from './components/CometTrail';
+import { CancerConstellation } from './components/CancerConstellation'; // <-- Importou aqui
 import './index.css';
 
 function App() {
@@ -11,7 +12,8 @@ function App() {
   return (
     <main>
       <BackgroundStars />
-      <CometTrail /> {/* <-- Adicionou aqui */}
+      <CancerConstellation /> {/* <-- Adicionou aqui */}
+      <CometTrail />
 
       {currentScreen === 'home' && (
         <Home onStart={() => setCurrentScreen('universe')} />
