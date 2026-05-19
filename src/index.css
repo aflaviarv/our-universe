@@ -389,3 +389,71 @@ body {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+.universe-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  cursor: crosshair; /* Muda o mouse para uma cruz para indicar que dá pra clicar */
+}
+
+/* =========================================
+   ESTRELAS DE MEMÓRIA (INTERATIVAS)
+   ========================================= */
+
+.star {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  transform: translate(-50%, -50%); /* Garante que o centro da estrela seja onde você clicou */
+  
+  /* Efeito de super brilho (Glow) */
+  box-shadow: 
+    0 0 10px #ffffff,
+    0 0 20px rgba(255, 255, 255, 0.8),
+    0 0 30px rgba(255, 255, 255, 0.6);
+  
+  /* Animação para a estrela nascer com fade-in e ficar piscando suavemente */
+  animation: starPulse 2s infinite ease-in-out, starEntrance 0.5s ease-out forwards;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Efeito de aumentar o brilho quando passar o mouse por cima */
+.star:hover {
+  transform: translate(-50%, -50%) scale(1.3);
+  box-shadow: 
+    0 0 15px #ffffff,
+    0 0 30px rgba(255, 255, 255, 1),
+    0 0 45px rgba(255, 255, 255, 0.8);
+}
+
+/* --- KEYFRAMES DAS ESTRELAS --- */
+
+/* Nascer suavemente no céu */
+@keyframes starEntrance {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Pulsar o brilho infinitamente (efeito estelar orgânico) */
+@keyframes starPulse {
+  0%, 100% {
+    opacity: 0.8;
+    box-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.6);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 15px #ffffff, 0 0 30px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6);
+  }
+}
