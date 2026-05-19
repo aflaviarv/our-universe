@@ -457,3 +457,119 @@ body {
     box-shadow: 0 0 15px #ffffff, 0 0 30px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6);
   }
 }
+
+.logo-anatheus {
+  font-size: 5rem;
+  letter-spacing: 15px;
+  font-weight: 200;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.tagline {
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 3px;
+  margin-bottom: 50px;
+}
+
+.mode-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.btn-adm {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.5);
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-adm:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.purpose-text {
+  margin-top: 100px;
+  font-size: 0.8rem;
+  max-width: 400px;
+  color: rgba(255, 255, 255, 0.3);
+  font-style: italic;
+}
+
+/* Container dos botões - Forçando o alinhamento central */
+.mode-selection {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 20px !important;
+  margin: 40px 0 !important;
+  width: 100% !important;
+}
+
+/* Botão base estelar - Garantindo consistência total */
+.btn-stelar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  max-width: 280px !important;
+  padding: 14px 32px !important;
+  font-size: 1rem !important;
+  border-radius: 50px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  font-weight: 600 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-decoration: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Efeito de Brilho ao passar o mouse */
+.btn-stelar:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 8px rgba(255, 255, 255, 0.5) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Garante que o clique seja sempre ativo */
+.btn-stelar:active {
+  transform: scale(0.98) !important;
+}
+
+/* Definição da animação única */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 1. Título (Aparece primeiro, sem delay) */
+.logo-anatheus {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* 2. Tagline (Aparece logo depois) */
+.tagline {
+  animation: fadeInUp 0.8s ease-out 0.2s forwards;
+  opacity: 0; /* Começa invisível */
+}
+
+/* 3. Botões (Aparecem por último) */
+.btn-stelar {
+  animation: fadeInUp 0.8s ease-out 0.4s forwards;
+  opacity: 0; /* Começa invisível */
+}
+
+/* Pequeno delay extra para o segundo botão */
+.mode-selection button:nth-child(2) {
+  animation-delay: 0.6s;
+}

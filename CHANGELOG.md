@@ -2,6 +2,25 @@
 
 Acompanhamento detalhado de todas as alterações, correções e evolução da arquitetura do projeto **Our Universe**. O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-05-19
+
+### Novas Funcionalidades
+- **Navegação Dinâmica**: Implementado o controle centralizado de estados entre `App.jsx` e `Home.jsx`, permitindo a transição fluida entre modo criador (ADM) e visualizador.
+- **Sistema de Constelações**: Centralizado o estado da constelação ativa no `App.jsx`, permitindo a troca dinâmica via painel administrativo com reflexo imediato no `Universe.jsx`.
+- **Animações de Entrada**: Adicionado efeito *fadeInUp* com *staggering* (atraso escalonado) em todos os elementos da `Home`, garantindo uma entrada profissional e organizada a cada recarregamento da página.
+
+### Refatoração e Correções
+- **Remoção de Duplicidade**: Removido componente estático de constelação do `App.jsx` que causava sobreposição visual indesejada.
+- **Padronização CSS**: Migração de estilos *inline* para classes CSS no `index.css` (`.btn-stelar`), garantindo consistência visual e manutenibilidade.
+- **UX aprimorada**: Adicionado efeito de brilho (*glow*) e escala (*hover scale*) nos botões para melhorar o *feedback* interativo.
+- **Estabilização de Estado**: Correção do fluxo de `onChooseMode` para garantir que o estado de visualização (`isViewingMode`) seja corretamente definido antes da renderização do universo.
+
+### Correções de Bugs
+- Corrigido travamento dos botões da Home que impediam o acesso ao modo ADM.
+- Corrigido conflito de renderização que causava a exibição de duas constelações simultaneamente.
+
+---
+
 ## [1.3.0] - 2026-05-19
 
 ### Alterado

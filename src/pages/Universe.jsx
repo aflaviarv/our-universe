@@ -1,26 +1,41 @@
+// src/pages/Universe.jsx
 import { useState } from 'react';
 import { Star } from '../components/Star.jsx';
 import { MemoryModal } from '../components/MemoryModal.jsx';
 import { encodeUniverse } from '../utils/urlParser.js';
 
-export function Universe({ memories, isViewingMode, onUpdateMemories }) {
+// Importação das Constelações
+import { AriesConstellation } from '../components/AriesConstellation.jsx';
+import { TouroConstellation } from '../components/TouroConstellation.jsx';
+import { GemeosConstellation } from '../components/GemeosConstellation.jsx';
+import { CancerConstellation } from '../components/CancerConstellation.jsx';
+import { LeaoConstellation } from '../components/LeaoConstellation.jsx';
+import { VirgemConstellation } from '../components/VirgemConstellation.jsx';
+import { LibraConstellation } from '../components/LibraConstellation.jsx';
+import { EscorpiaoConstellation } from '../components/EscorpiaoConstellation.jsx';
+import { SagitarioConstellation } from '../components/SagitarioConstellation.jsx';
+import { CapricornioConstellation } from '../components/CapricornioConstellation.jsx';
+import { AquarioConstellation } from '../components/AquarioConstellation.jsx';
+import { PeixesConstellation } from '../components/PeixesConstellation.jsx';
+
+export function Universe({ memories, isViewingMode, constellation, onChangeConstellation, onUpdateMemories }) {
   const [generatedLink, setGeneratedLink] = useState('');
   const [selectedMemory, setSelectedMemory] = useState(null);
 
   const handleCanvasClick = (e) => {
-    // Se o parceiro estiver a ver o presente, ele não pode criar estrelas
     if (isViewingMode) return;
 
-    // Impede a abertura do prompt se o utilizador clicar numa estrela existente,
-    // no painel de administração ou dentro do modal de memória
-    if (e.target.closest('.star') || e.target.closest('.admin-panel') || e.target.closest('.modal-content')) return;
+    if (
+      e.target.closest('.star') || 
+      e.target.closest('.admin-panel') || 
+      e.target.closest('.modal-content') ||
+      e.target.closest('.constellation-selector')
+    ) return;
 
-    // Calcula a posição exata em percentagem baseado no tamanho do ecrã do utilizador
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
 
-    // Abre as caixas de diálogo nativas do navegador para recolher os dados
     const title = prompt("Digite o título da memória:");
     if (!title) return;
 
@@ -35,63 +50,84 @@ export function Universe({ memories, isViewingMode, onUpdateMemories }) {
       position: { top: `${y}%`, left: `${x}%` }
     };
 
-    // Atualiza o estado global no App.jsx com a nova lista de memórias
     onUpdateMemories([...memories, newMemory]);
   };
 
   const handleGenerateLink = () => {
-    // Monta o objeto estruturado para codificação em Base64
     const currentData = {
-      home: {
-        title: "Você me deu uma estrela.",
-        subtitle: "Então eu resolvi te devolver um universo cheio delas.",
-        buttonText: "Entrar no nosso universo"
-      },
+      home: { title: "Anatheus", subtitle: "Sua história eternizada entre estrelas." },
+      constellation: constellation,
       memories: memories
     };
 
     const code = encodeUniverse(currentData);
     const link = `${window.location.origin}${window.location.pathname}?u=${code}`;
     setGeneratedLink(link);
-    
-    // Copia o link gerado automaticamente para a área de transferência (clipboard)
     navigator.clipboard.writeText(link);
-    alert("Link do universo copiado para a área de transferência!");
+    alert("Link do universo personalizado copiado!");
   };
 
   return (
     <div className="universe-container" onClick={handleCanvasClick}>
-      {/* Renderização dinâmica das estrelas criadas */}
+      
+      {/* Constelação Dinâmica */}
+      {constellation === 'aries' && <AriesConstellation />}
+      {constellation === 'touro' && <TouroConstellation />}
+      {constellation === 'gemeos' && <GemeosConstellation />}
+      {constellation === 'cancer' && <CancerConstellation />}
+      {constellation === 'leao' && <LeaoConstellation />}
+      {constellation === 'virgem' && <VirgemConstellation />}
+      {constellation === 'libra' && <LibraConstellation />}
+      {constellation === 'escorpiao' && <EscorpiaoConstellation />}
+      {constellation === 'sagitario' && <SagitarioConstellation />}
+      {constellation === 'capricornio' && <CapricornioConstellation />}
+      {constellation === 'aquario' && <AquarioConstellation />}
+      {constellation === 'peixes' && <PeixesConstellation />}
+
+      {/* Estrelas */}
       {memories.map((memory) => (
-        <Star 
-          key={memory.id} 
-          memory={memory} 
-          onClick={(m) => setSelectedMemory(m)} 
-        />
+        <Star key={memory.id} memory={memory} onClick={(m) => setSelectedMemory(m)} />
       ))}
 
-      {/* Abre o Modal elegante apenas se houver uma estrela selecionada */}
       {selectedMemory && (
-        <MemoryModal 
-          memory={selectedMemory} 
-          onClose={() => setSelectedMemory(null)} 
-        />
+        <MemoryModal memory={selectedMemory} onClose={() => setSelectedMemory(null)} />
       )}
 
-      {/* Painel do Modo Criador visível apenas para quem está a construir o céu */}
+      {/* Painel Administrativo */}
       {!isViewingMode && (
         <div className="admin-panel">
-          <p>Modo Criador Ativo</p>
-          <span>Clique em qualquer lugar do céu para fixar uma nova memória.</span>
-          <button onClick={handleGenerateLink}>Gerar Link do Presente</button>
+          <div className="admin-header">
+            <p>Anatheus Engine — Modo Criador</p>
+          </div>
+
+          <div className="constellation-selector">
+            <label htmlFor="constellation-select">Constelação: </label>
+            <select 
+              id="constellation-select"
+              value={constellation} 
+              onChange={(e) => onChangeConstellation(e.target.value)}
+            >
+              <option value="aries">Áries</option>
+              <option value="touro">Touro</option>
+              <option value="gemeos">Gémeos</option>
+              <option value="cancer">Câncer</option>
+              <option value="leao">Leão</option>
+              <option value="virgem">Virgem</option>
+              <option value="libra">Libra</option>
+              <option value="escorpiao">Escorpião</option>
+              <option value="sagitario">Sagitário</option>
+              <option value="capricornio">Capricórnio</option>
+              <option value="aquario">Aquário</option>
+              <option value="peixes">Peixes</option>
+            </select>
+          </div>
+
+          <button className="btn-generate" onClick={handleGenerateLink}>
+            Gerar Link do Presente
+          </button>
           
           {generatedLink && (
-            <input 
-              type="text" 
-              readOnly 
-              value={generatedLink} 
-              onClick={(e) => e.target.select()} 
-            />
+            <input type="text" readOnly value={generatedLink} onClick={(e) => e.target.select()} />
           )}
         </div>
       )}

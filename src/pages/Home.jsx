@@ -1,18 +1,33 @@
-export function Home({ data, onStart }) {
-  // Evita que o app quebre se os dados demorarem um milissegundo a carregar
-  const title = data?.title || "Você me deu uma estrela.";
-  const subtitle = data?.subtitle || "Então eu resolvi te devolver um universo cheio delas.";
-  const buttonText = data?.buttonText || "Entrar no nosso universo";
-
+// src/pages/Home.jsx
+export function Home({ onChooseMode }) {
   return (
     <div className="home-container">
       <div className="home-content">
-        <h1>{title}</h1>
-        <p>{subtitle}</p>
+        <h1 className="logo-anatheus">ANATHEUS</h1>
+        <p className="tagline">Sua história eternizada entre estrelas.</p>
         
-        <button className="start-button" onClick={onStart}>
-          {buttonText}
-        </button>
+        <div className="mode-selection">
+          {/* Botão para visualizar (o botão que brilha e sobe ao recarregar) */}
+          <button 
+            className="btn-stelar" 
+            onClick={() => onChooseMode('viewer')}
+          >
+            Entrar no Universo
+          </button>
+          
+          {/* Botão para modo ADM (o botão que brilha e sobe ao recarregar) */}
+          <button 
+            className="btn-stelar" 
+            onClick={() => onChooseMode('adm')}
+          >
+            <i className="fa-solid fa-gear"></i> Modo ADM (Criar Estrelas)
+          </button>
+        </div>
+        
+        <p className="purpose-text">
+          Anatheus é uma ferramenta de engenharia emocional para transformar 
+          memórias digitais em mapas astronômicos interativos.
+        </p>
       </div>
     </div>
   );
