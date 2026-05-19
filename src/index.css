@@ -24,3 +24,155 @@ body {
   width: 100%;
   min-height: 100vh;
 }
+
+/* =========================================
+   TELA INICIAL (HOME)
+   ========================================= */
+
+   .home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 0 20px;
+   }
+
+   /*Animação suave de entrada (Fade In)*/
+   .home-content {
+    animation: fadeIn 2s ease-in-out;
+   }
+
+   .home-content h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+   }
+
+   .home-content p {
+    font-size: 1.2rem;
+    font-weight: 200;
+    margin-bottom: 40px;
+   }
+
+   /*Botão de "Começar"*/
+   .start-button {
+    background: transparent;
+    color: #ffffff;
+    padding: 12px 30px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+   }
+
+   /*Efeito de Hover (quando passar o mouse por cima)*/
+   .start-button:hover {
+    background: #ffffff;
+    color: #090a0f;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+   }
+
+    /* Animação de Fade In */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =========================================
+   FUNDO ESTRELADO (BACKGROUND)
+   ========================================= */
+
+.background-stars-container {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; 
+  pointer-events: none; 
+}
+
+.bg-star {
+  position: absolute;
+  background-color: #ffffff;
+  border-radius: 50%;
+  opacity: 0;
+  animation: bg-twinkle infinite alternate ease-in-out;
+}
+
+/* A Animação de brilho realista*/
+@keyframes bg-twinkle {
+  0% { 
+    opacity: 0.1;
+    transform: scale(0.5);
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0); /* Sem brilho em volta */
+  }
+  100% { 
+    opacity: 1;
+    transform: scale(1.2);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px rgba(255, 255, 255, 0.4); 
+  }
+}
+
+/* =========================================
+   RASTRO DO COMETA (MOUSE/TOUCH)
+   ========================================= */
+
+.comet-dust {
+  position: fixed;
+  background-color: #ffffff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%); 
+  animation: cometFade 0.6s forwards linear; 
+}
+
+/* Animação: Nasce grande e brilhante, encolhe, some e se espalha */
+@keyframes cometFade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--spread-x)), calc(-50% + var(--spread-y))) scale(0);
+  }
+}
+
+.lunar-glow {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  animation: lunarPulse 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes lunarPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.6;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.5);
+  }
+}
