@@ -1,0 +1,37 @@
+# Changelog
+
+Acompanhamento detalhado de todas as alterações, correções e evolução da arquitetura do projeto **Our Universe**. O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.0.html).
+
+---
+
+## [1.2.0] - 2026-05-19
+
+### Adicionado
+- **Documentação de Evolução (`CHANGELOG.md`):** Criação deste arquivo para registrar de forma transparente o histórico de engenharia, refatorações e marcos técnicos do projeto.
+
+---
+
+## [1.1.0] - 2026-05-19
+
+### Adicionado
+- **Arquitetura Serverless Dinâmica:** Implementação de persistência e tráfego de dados via cliente através da codificação do banco de memórias em string Base64 segura anexada aos parâmetros da URL (`?u=`).
+- **Modo Criador Visual:** Adicionada escuta de eventos de clique no plano de fundo do componente `Universe.jsx`, calculando automaticamente as coordenadas matemáticas (`top` e `left` em porcentagem) para criação dinâmica de novas estrelas.
+- **Painel Administrativo (`.admin-panel`):** Menu inferior discreto para gerenciamento do fluxo do criador, com geração de link em tempo real e cópia automática para a área de transferência (`navigator.clipboard`).
+- **Componente `MemoryModal.jsx`:** Criação de um card flutuante centralizado para leitura de textos e datas, utilizando efeito de desfoque de fundo de alta fidelidade visual (`backdrop-filter: blur(8px)`).
+- **Tratamento de Erros de Execução:** Lógica com blocos `try/catch` no ciclo de efeito inicial (`useEffect`) do `App.jsx` para garantir o carregamento do estado padrão (`DEFAULT_UNIVERSE`) caso parâmetros corrompidos sejam injetados na URL.
+
+### Corrigido
+- **Fidelidade Anatômica da Constelação:** Substituição da estrutura geométrica genérica anterior por um mapeamento vetorial SVG rigoroso que representa os nós e vértices reais das 5 estrelas principais de Câncer (*Acubens, Altarf, Asellus Australis, Asellus Borealis* e *Tegmine*).
+- **Orquestração de Animações CSS/React:** Resolução do bug de renderização inorgânica onde a constelação apenas piscava ("pop-upando"). Corrigido aplicando uma `key` dinâmica baseada em timestamp (`Date.now()`) no elemento SVG, forçando o navegador a resetar o estado físico e desenhar a constelação suavemente (`stroke-dashoffset`) a cada reposicionamento.
+- **Resolução de Imports e Cache do Vite:** Correção de erros críticos em cascata de análise de módulos (`[plugin:vite:import-analysis]`) através da padronização de caminhos e declaração explícita de extensões de arquivos (`.jsx` e `.js`) nas diretivas de importação.
+- **Consistência de Variáveis:** Alinhamento de nomenclatura de objetos e propriedades entre o arquivo central de configuração (`universe.config.js`) e as views de consumo (`Home.jsx` e `Universe.jsx`).
+
+---
+
+## [1.0.0] - 2026-05-18
+
+### Adicionado
+- **Camada de Entrada (`Home.jsx`):** Criação da interface inicial com tipografia elegante, centralização absoluta e transição de telas via manipulação de estados do React.
+- **Sistema de Partículas de Fundo (`BackgroundStars.jsx`):** Camada estática simulando um céu estrelado profundo distribuído de forma pseudo-aleatória.
+- **Interatividade de Cursor (`CometTrail.jsx`):** Efeito cinemático de rastro luminoso que persegue o movimento do ponteiro do mouse na tela utilizando coordenadas em tempo real.
+- **Estilização Base:** Configuração de resets globais de layout, paleta de cores voltada para tons escuros espaciais e tipografias minimalistas no `index.css`.
