@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Home } from './pages/Home';
-import { Universe } from './pages/Universe';
-import { BackgroundStars } from './components/BackgroundStars';
-import { CometTrail } from './components/CometTrail';
-import { CancerConstellation } from './components/CancerConstellation';
-import { DEFAULT_UNIVERSE } from './universe.config';
-import { decodeUniverse } from './utils/urlParser';
+import { Home } from './pages/Home.jsx';
+import { Universe } from './pages/Universe.jsx';
+import { BackgroundStars } from './components/BackgroundStars.jsx';
+import { CancerConstellation } from './components/CancerConstellation.jsx';
+import { CometTrail } from './components/CometTrail.jsx';
+import { DEFAULT_UNIVERSE } from './universe.config.js';
+import { decodeUniverse } from './utils/urlParser.js';
 import './index.css';
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
       const decoded = decodeUniverse(urlData);
       if (decoded) {
         setUniverseData(decoded);
-        setIsViewingMode(true); // O parceiro apenas visualiza, não edita
+        setIsViewingMode(true);
       }
     }
   }, []);
