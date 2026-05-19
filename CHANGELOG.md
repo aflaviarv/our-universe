@@ -2,6 +2,15 @@
 
 Acompanhamento detalhado de todas as alterações, correções e evolução da arquitetura do projeto **Our Universe**. O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-05-19
+
+### Alterado
+- **Isolamento de Estado de Fábrica:** Limpeza completa do array de memórias no ficheiro `universe.config.js` para garantir que o Modo Criador inicie sempre com o céu 100% zerado após um reload.
+- **Fluxo de Hidratação de Dados:** Refatoração do ciclo de vida no `App.jsx` para discernir com precisão entre o ambiente de criação limpo (sem parâmetros na URL) e o ambiente de visualização do presenteado (hidratado via Base64 na URL).
+
+### Adicionado
+- **Documentação de Evolução (`CHANGELOG.md`):** Criação deste arquivo para registrar de forma transparente o histórico de engenharia, refatorações e marcos técnicos do projeto.
+
 ---
 
 ## [1.2.0] - 2026-05-19
