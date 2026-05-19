@@ -1,0 +1,26 @@
+/* src/index.css */
+
+/* 1. O Reset: Tira as margens que os navegadores colocam por padrão */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 2. O Corpo: Define o fundo escuro e a fonte padrão */
+body {
+  /* Um gradiente radial que simula a profundidade do espaço (mais claro no meio, escuro nas bordas) */
+  background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+  color: #ffffff;
+  font-family: 'Helvetica Neue', sans-serif;
+  
+  /* Garante que o corpo ocupe 100% da altura da tela, não importa o dispositivo */
+  min-height: 100vh;
+  overflow-x: hidden; /* Evita a barra de rolagem horizontal no celular */
+}
+
+/* 3. Ajuste do id="root" onde o React injeta o aplicativo */
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
