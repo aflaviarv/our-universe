@@ -1,103 +1,218 @@
-/* src/index.css */
+/* =========================================
+   Anatheus Core Stylesheet
+   Refatorado e Organizado
+   ========================================= */
 
-/* 1. O Reset: Tira as margens que os navegadores colocam por padrão */
+/* 1. RESET E GLOBAIS
+   ========================================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* 2. O Corpo: Define o fundo escuro e a fonte padrão */
-body {
-  /* Um gradiente radial que simula a profundidade do espaço (mais claro no meio, escuro nas bordas) */
-  background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
-  color: #ffffff;
-  font-family: 'Helvetica Neue', sans-serif;
-  
-  /* Garante que o corpo ocupe 100% da altura da tela, não importa o dispositivo */
-  min-height: 100vh;
-  overflow-x: hidden; /* Evita a barra de rolagem horizontal no celular */
-}
-
-/* 3. Ajuste do id="root" onde o React injeta o aplicativo */
-#root {
+body, #root {
   width: 100%;
   min-height: 100vh;
 }
 
+body {
+  background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+  color: #ffffff;
+  font-family: 'Helvetica Neue', sans-serif;
+  overflow-x: hidden;
+  /* Opcional: Esconde o ponteiro padrão do sistema para usar só a estrela */
+  cursor: none; 
+}
+
+/* Esconde ponteiro padrão em elementos clicáveis também (para consistência) */
+a, button, select, input, .star {
+  cursor: none;
+}
+
 /* =========================================
-   TELA INICIAL (HOME)
+   2. ANIMAÇÕES (KEYFRAMES)
    ========================================= */
 
-   .home-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    text-align: center;
-    padding: 0 20px;
-   }
-
-.home-content h1 {
-  font-size: 2.5rem;
-  font-weight: 300;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  
-  opacity: 0;
-  animation: cinematicFade 2s ease-out forwards;
-  animation-delay: 1s; 
-}
-
-.home-content p {
-  font-size: 1.2rem;
-  font-weight: 200;
-  margin-bottom: 40px;
-  
-  opacity: 0;
-  animation: cinematicFade 2s ease-out forwards;
-  animation-delay: 3.5s; 
-}
-
-.start-button {
-  background: transparent;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  padding: 12px 30px;
-  font-size: 1rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  
-  opacity: 0;
-  animation: cinematicFade 2s ease-out forwards;
-  animation-delay: 6s; 
-}
-
-.start-button:hover {
-  background: #ffffff;
-  color: #090a0f;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-}
-
-@keyframes cinematicFade {
+/* Coreografia 1: Logo surge grande no centro e vai para o lugar */
+@keyframes logoIntro {
   0% {
     opacity: 0;
-    transform: translateY(15px);
+    transform: scale(1.4) translateY(40px);
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.4) translateY(40px);
+    text-shadow: 0 0 40px rgba(255, 255, 255, 1);
   }
   100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Coreografia 2: Elementos surgindo de baixo para cima */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-  
-    /* =========================================
-   FUNDO ESTRELADO (BACKGROUND)
+
+/* =========================================
+   3. TELA INICIAL (HOME) - A COREOGRAFIA
+   ========================================= */
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0 20px;
+}
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+/* Elemento 1: Logo */
+.logo-anatheus {
+  font-size: 5rem;
+  letter-spacing: 15px;
+  font-weight: 200;
+  color: #fff;
+  opacity: 0; /* Começa invisível */
+  animation: logoIntro 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Elemento 2: Subtítulo */
+.tagline {
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 3px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 2s; /* Espera a logo terminar */
+}
+
+/* Container dos Botões */
+.mode-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+/* Elementos 3 e 4: Botões (Delays escalonados em .btn-stelar abaixo) */
+
+/* Elemento 5: Propósito */
+.purpose-text {
+  font-size: 0.85rem;
+  max-width: 400px;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  margin: 0 auto;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 3s; /* Aparece por último */
+}
+
+/* =========================================
+   4. BOTÕES E INTERFACES COMUNS
    ========================================= */
 
+/* Botão Principal Estelar */
+.btn-stelar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+  width: 100%;
+  max-width: 280px;
+  padding: 14px 20px;
+  font-size: 1rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  line-height: 1.3;
+  white-space: nowrap;
+  
+  /* Animação base de entrada (fade-in) */
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Delays escalonados para os botões na Home */
+.mode-selection button:nth-child(1) {
+  animation-delay: 2.3s; /* Logo após tagline */
+}
+.mode-selection button:nth-child(2) {
+  animation-delay: 2.6s; /* Logo após botão 1 */
+}
+
+.btn-stelar:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 8px rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.btn-stelar:active {
+  transform: scale(0.98);
+}
+
+/* Botão de Voltar (Página Universo) */
+.btn-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.btn-back:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateX(-5px);
+}
+
+/* =========================================
+   5. UNIVERSO, ESTRELAS E COMETAS
+   ========================================= */
+.universe-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Fundo Estrelado (BackgroundStars) */
 .background-stars-container {
   position: fixed; 
   top: 0;
@@ -116,12 +231,11 @@ body {
   animation: bg-twinkle infinite alternate ease-in-out;
 }
 
-/* A Animação de brilho realista*/
 @keyframes bg-twinkle {
   0% { 
     opacity: 0.1;
     transform: scale(0.5);
-    box-shadow: 0 0 0px rgba(255, 255, 255, 0); /* Sem brilho em volta */
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0);
   }
   100% { 
     opacity: 1;
@@ -130,62 +244,90 @@ body {
   }
 }
 
-/* =========================================
-   RASTRO DO COMETA (MOUSE/TOUCH)
-   ========================================= */
+/* --- NOVO: A ESTRELA FIXA DO MOUSE (CURSOR) --- */
+.cursor-star {
+  position: fixed;
+  width: 10px; /* Tamanho da bolinha central */
+  height: 10px;
+  background: #ffffff;
+  border-radius: 50%;
+  pointer-events: none; /* Crucial: não intercepta cliques */
+  z-index: 99999; /* Máxima prioridade visual */
+  transform: translate(-50%, -50%); /* Centraliza perfeitamente no ponteiro */
+  
+  /* Brilho intenso constante */
+  box-shadow: 
+    0 0 10px #ffffff,
+    0 0 20px rgba(255, 255, 255, 0.8),
+    0 0 30px rgba(255, 255, 255, 0.6);
+  
+  /* Animação de pulsação suave (twinkle) para quando parado */
+  animation: cursorTwinkle 1.5s infinite alternate ease-in-out;
+}
 
+@keyframes cursorTwinkle {
+  0% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(0.9);
+    box-shadow: 0 0 10px #ffffff, 0 0 15px rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 15px #ffffff, 0 0 25px rgba(255, 255, 255, 0.9), 0 0 35px rgba(255, 255, 255, 0.7);
+  }
+}
+
+/* Partículas do Rastro (CometTrail JS) */
 .comet-dust {
   position: fixed;
+  width: 4px;
+  height: 4px;
   background-color: #ffffff;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 9999; /* Um pouco abaixo da estrela principal */
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px rgba(255, 255, 255, 0.4);
-  transform: translate(-50%, -50%); 
   animation: cometFade 0.6s forwards linear; 
 }
 
-/* Animação: Nasce grande e brilhante, encolhe, some e se espalha */
 @keyframes cometFade {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(calc(-50% + var(--spread-x)), calc(-50% + var(--spread-y))) scale(0);
-  }
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--spread-x)), calc(-50% + var(--spread-y))) scale(0); }
 }
 
-.lunar-glow {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.8);
+/* Estrelas de Memória (Interativas no Universo) */
+.star {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
   border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
+  z-index: 10;
   transform: translate(-50%, -50%);
-  animation: lunarPulse 1.5s infinite alternate ease-in-out;
+  box-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6);
+  animation: starEntrance 0.5s ease-out forwards, starPulse 2s infinite ease-in-out 0.5s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-@keyframes lunarPulse {
-  0% {
-    transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0.6;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 1;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.5);
-  }
+.star:hover {
+  transform: translate(-50%, -50%) scale(1.3);
+  box-shadow: 0 0 15px #ffffff, 0 0 30px rgba(255, 255, 255, 1), 0 0 45px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes starEntrance {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes starPulse {
+  0%, 100% { opacity: 0.8; box-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.6); }
+  50% { opacity: 1; box-shadow: 0 0 15px #ffffff, 0 0 30px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6); }
 }
 
 /* =========================================
-   CONSTELAÇÕES (CICLO VIVO E DESENHO)
+   6. CAMADAS DE CONSTELAÇÕES (SVG)
    ========================================= */
-
 .constellation-layer {
   position: fixed;
   top: 0;
@@ -194,129 +336,42 @@ body {
   height: 100vh;
   z-index: 0; 
   pointer-events: none;
-  overflow: hidden;
 }
 
 .cancer-svg-live {
   position: absolute;
   opacity: 0;
-  /* Animação que controla o ciclo de vida (nascer suave, viver, sumir suave) */
   animation: constellationCycle 6s linear forwards; 
 }
 
-/* A Linha: Animação de desenho orgânico */
 .constellation-path-live {
-  stroke-dasharray: 400; /* Um valor alto para cobrir o traço */
-  stroke-dashoffset: 400; /* Começa invisível */
-  /* Desenha o traço do início ao fim em 2.5s */
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
   animation: drawLine 2.5s ease-out forwards; 
-  /* Começa a desenhar só depois que o SVG aparecer no fade (0.5s de delay) */
   animation-delay: 0.5s; 
 }
 
-/* As Estrelas: Brilho e Fade sincronizado */
 .draw-star-live {
   filter: drop-shadow(0 0 7px rgba(255, 255, 255, 1));
   opacity: 0;
-  /* Elas aparecem devagar enquanto a linha é desenhada */
   animation: starAppear 1.5s ease-in forwards;
   animation-delay: 1s; 
 }
 
-/* --- KEYFRAMES (As regras matemáticas das animações) --- */
-
-/* Ciclo de vida: Fade-In (0s a 0.5s), Visível (0.5s a 4.5s), Fade-Out (4.5s a 6s) */
 @keyframes constellationCycle {
   0% { opacity: 0; }
-  8% { opacity: 1; }   /* Fade-in em ~0.5s */
-  75% { opacity: 1; }  /* Fica estável e visível até 4.5s */
-  100% { opacity: 0; } /* Fade-out até 6s */
+  8%, 75% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
-/* Animação de desenho: Move o offset de 400 para 0, revelando a linha */
-@keyframes drawLine {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-/* Animação das estrelas: Fade-In simples */
-@keyframes starAppear {
-  to {
-    opacity: 1;
-  }
-}
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+@keyframes starAppear { to { opacity: 1; } }
 
 /* =========================================
-   PAINEL ADMINISTRATIVO DO CRIADOR
+   7. INTERFACES (MODAL E PAINEL ADM)
    ========================================= */
 
-.admin-panel {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(9, 10, 15, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  padding: 15px 25px;
-  border-radius: 16px;
-  text-align: center;
-  z-index: 1000;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-.admin-panel p {
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #ffffff;
-  margin-bottom: 2px;
-}
-
-.admin-panel span {
-  display: block;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 12px;
-}
-
-.admin-panel button {
-  background: #ffffff;
-  color: #090a0f;
-  border: none;
-  padding: 8px 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border-radius: 20px;
-  cursor: pointer;
-  width: 100%;
-  transition: opacity 0.2s;
-}
-
-.admin-panel button:hover {
-  opacity: 0.9;
-}
-
-.admin-panel input {
-  margin-top: 10px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  text-align: center;
-}
-
-/* =========================================
-   CARD DE MEMÓRIA (MODAL)
-   ========================================= */
-
+/* Modal de Memória */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -357,219 +412,33 @@ body {
   transition: color 0.2s;
 }
 
-.modal-close:hover {
-  color: #ffffff;
-}
+.modal-close:hover { color: #ffffff; }
+.modal-date { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.4); display: block; margin-bottom: 10px; }
+.modal-content h2 { font-size: 1.8rem; font-weight: 400; color: #ffffff; margin-bottom: 20px; letter-spacing: 1px; }
+.modal-content p { font-size: 1rem; color: rgba(255, 255, 255, 0.75); line-height: 1.6; font-weight: 300; }
 
-.modal-date {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.4);
-  display: block;
-  margin-bottom: 10px;
-}
+@keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-.modal-content h2 {
-  font-size: 1.8rem;
-  font-weight: 400;
-  color: #ffffff;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
-}
-
-.modal-content p {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.75);
-  line-height: 1.6;
-  font-weight: 300;
-}
-
-@keyframes modalFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.universe-container {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  cursor: crosshair; /* Muda o mouse para uma cruz para indicar que dá pra clicar */
-}
-
-/* =========================================
-   ESTRELAS DE MEMÓRIA (INTERATIVAS)
-   ========================================= */
-
-.star {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  background: #ffffff;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 10;
-  transform: translate(-50%, -50%); /* Garante que o centro da estrela seja onde você clicou */
-  
-  /* Efeito de super brilho (Glow) */
-  box-shadow: 
-    0 0 10px #ffffff,
-    0 0 20px rgba(255, 255, 255, 0.8),
-    0 0 30px rgba(255, 255, 255, 0.6);
-  
-  /* Animação para a estrela nascer com fade-in e ficar piscando suavemente */
-  animation: starPulse 2s infinite ease-in-out, starEntrance 0.5s ease-out forwards;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-/* Efeito de aumentar o brilho quando passar o mouse por cima */
-.star:hover {
-  transform: translate(-50%, -50%) scale(1.3);
-  box-shadow: 
-    0 0 15px #ffffff,
-    0 0 30px rgba(255, 255, 255, 1),
-    0 0 45px rgba(255, 255, 255, 0.8);
-}
-
-/* --- KEYFRAMES DAS ESTRELAS --- */
-
-/* Nascer suavemente no céu */
-@keyframes starEntrance {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-/* Pulsar o brilho infinitamente (efeito estelar orgânico) */
-@keyframes starPulse {
-  0%, 100% {
-    opacity: 0.8;
-    box-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.6);
-  }
-  50% {
-    opacity: 1;
-    box-shadow: 0 0 15px #ffffff, 0 0 30px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6);
-  }
-}
-
-.logo-anatheus {
-  font-size: 5rem;
-  letter-spacing: 15px;
-  font-weight: 200;
-  color: #fff;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-}
-
-.tagline {
-  color: rgba(255, 255, 255, 0.6);
-  letter-spacing: 3px;
-  margin-bottom: 50px;
-}
-
-.mode-selection {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-}
-
-.btn-adm {
-  background: transparent;
+/* Painel Administrativo do Criador (Universo) */
+.admin-panel {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(9, 10, 15, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.5);
-  padding: 10px 20px;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.btn-adm:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-}
-
-.purpose-text {
-  margin-top: 100px;
-  font-size: 0.8rem;
+  backdrop-filter: blur(10px);
+  padding: 15px 25px;
+  border-radius: 16px;
+  text-align: center;
+  z-index: 1000;
+  width: 90%;
   max-width: 400px;
-  color: rgba(255, 255, 255, 0.3);
-  font-style: italic;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* Container dos botões - Forçando o alinhamento central */
-.mode-selection {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 20px !important;
-  margin: 40px 0 !important;
-  width: 100% !important;
-}
-
-/* Botão base estelar - Garantindo consistência total */
-.btn-stelar {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-  max-width: 280px !important;
-  padding: 14px 32px !important;
-  font-size: 1rem !important;
-  border-radius: 50px !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  background-color: rgba(255, 255, 255, 0.05) !important;
-  color: #ffffff !important;
-  cursor: pointer !important;
-  font-weight: 600 !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  text-decoration: none !important;
-  box-sizing: border-box !important;
-}
-
-/* Efeito de Brilho ao passar o mouse */
-.btn-stelar:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(255, 255, 255, 0.6) !important;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 8px rgba(255, 255, 255, 0.5) !important;
-  transform: scale(1.05) !important;
-}
-
-/* Garante que o clique seja sempre ativo */
-.btn-stelar:active {
-  transform: scale(0.98) !important;
-}
-
-/* Definição da animação única */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 1. Título (Aparece primeiro, sem delay) */
-.logo-anatheus {
-  animation: fadeInUp 0.8s ease-out forwards;
-}
-
-/* 2. Tagline (Aparece logo depois) */
-.tagline {
-  animation: fadeInUp 0.8s ease-out 0.2s forwards;
-  opacity: 0; /* Começa invisível */
-}
-
-/* 3. Botões (Aparecem por último) */
-.btn-stelar {
-  animation: fadeInUp 0.8s ease-out 0.4s forwards;
-  opacity: 0; /* Começa invisível */
-}
-
-/* Pequeno delay extra para o segundo botão */
-.mode-selection button:nth-child(2) {
-  animation-delay: 0.6s;
-}
+.admin-panel p { font-size: 0.9rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #ffffff; margin-bottom: 2px; }
+.admin-panel span { display: block; font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 12px; }
+.admin-panel button { background: #ffffff; color: #090a0f; border: none; padding: 8px 20px; font-size: 0.85rem; font-weight: 600; border-radius: 20px; width: 100%; transition: opacity 0.2s; }
+.admin-panel button:hover { opacity: 0.9; }
+.admin-panel input { margin-top: 10px; width: 100%; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; text-align: center; }

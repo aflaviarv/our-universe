@@ -4,7 +4,6 @@ import { Star } from '../components/Star.jsx';
 import { MemoryModal } from '../components/MemoryModal.jsx';
 import { encodeUniverse } from '../utils/urlParser.js';
 
-// Importação das Constelações
 import { AriesConstellation } from '../components/AriesConstellation.jsx';
 import { TouroConstellation } from '../components/TouroConstellation.jsx';
 import { GemeosConstellation } from '../components/GemeosConstellation.jsx';
@@ -18,7 +17,8 @@ import { CapricornioConstellation } from '../components/CapricornioConstellation
 import { AquarioConstellation } from '../components/AquarioConstellation.jsx';
 import { PeixesConstellation } from '../components/PeixesConstellation.jsx';
 
-export function Universe({ memories, isViewingMode, constellation, onChangeConstellation, onUpdateMemories }) {
+// ATENÇÃO AQUI: onGoBack e isGiftLink foram adicionados nesta linha
+export function Universe({ memories, isViewingMode, constellation, onChangeConstellation, onUpdateMemories, onGoBack, isGiftLink }) {
   const [generatedLink, setGeneratedLink] = useState('');
   const [selectedMemory, setSelectedMemory] = useState(null);
 
@@ -29,7 +29,8 @@ export function Universe({ memories, isViewingMode, constellation, onChangeConst
       e.target.closest('.star') || 
       e.target.closest('.admin-panel') || 
       e.target.closest('.modal-content') ||
-      e.target.closest('.constellation-selector')
+      e.target.closest('.constellation-selector') ||
+      e.target.closest('.btn-back') // Impede criar estrela ao clicar em voltar
     ) return;
 
     const rect = e.currentTarget.getBoundingClientRect();
@@ -70,6 +71,13 @@ export function Universe({ memories, isViewingMode, constellation, onChangeConst
   return (
     <div className="universe-container" onClick={handleCanvasClick}>
       
+      {/* BOTÃO DE VOLTAR: Só aparece se NÃO for um link de presente */}
+      {!isGiftLink && (
+        <button className="btn-back" onClick={onGoBack}>
+          <i className="fa-solid fa-arrow-left"></i> Voltar para Home
+        </button>
+      )}
+
       {/* Constelação Dinâmica */}
       {constellation === 'aries' && <AriesConstellation />}
       {constellation === 'touro' && <TouroConstellation />}

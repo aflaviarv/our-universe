@@ -2,6 +2,26 @@
 
 Acompanhamento detalhado de todas as alterações, correções e evolução da arquitetura do projeto **Our Universe**. O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-05-20
+
+### Novas Funcionalidades
+- **Fluxo Exclusivo de Presenteado**: Implementada lógica de bloqueio de navegação quando a aplicação é acessada via link gerado (parâmetro de URL). O presenteado vê apenas a opção "Abrir Meu Presente" e tem a navegação travada no universo recebido, sem opção de voltar.
+- **Cursor Estelar Persistente**: Substituição do ponteiro padrão do sistema por uma estrela brilhante fixa (`.cursor-star`) com animação de pulsação suave que acompanha o usuário.
+- **Coreografia Visual (Home)**: Criação de uma sequência de animações de entrada onde a Logo surge e se posiciona, seguida pelo aparecimento em cascata do subtítulo, botões e texto de propósito, respeitando *delays* milimétricos.
+- **Botão de Retorno Condicional**: Adicionado botão "Voltar" no `Universe.jsx`, visível apenas para acessos em Modo Criador/Visualização Padrão.
+
+### Refatoração e Otimizações
+- **Otimização do Motor de Partículas (Throttle)**: Adicionado um limitador de tempo (30ms) na geração de partículas do `CometTrail.jsx`, garantindo alta performance e evitando travamentos no DOM durante movimentos bruscos do mouse.
+- **Arquitetura CSS Refatorada**: Limpeza total do arquivo `index.css`, remoção de blocos duplicados, organização por sessões lógicas e redução do uso de `!important`.
+- **Aprimoramento de UI/UX (Botões)**: Ajustes de *Flexbox* (`justify-content`, `align-items`, `gap`) e tratamento de texto (`white-space: nowrap`, `line-height`) na classe `.btn-stelar` para centralização perfeita do conteúdo, mesmo em quebras de linha.
+
+### Correções de Bugs
+- **Visibilidade do Rastro de Cometa**: Corrigido o bug onde as partículas do rastro sumiam, atribuindo as dimensões corretas (`width`/`height`) à classe `.comet-dust`.
+- **Alinhamento do Texto de Propósito**: Corrigido o deslocamento lateral da `.purpose-text` através da aplicação correta de `margin: 0 auto`.
+- **Prevenção de Falsos Cliques**: Corrigida a falha que criava uma estrela de memória acidentalmente quando o usuário clicava no botão "Voltar".
+
+---
+
 ## [1.4.0] - 2026-05-19
 
 ### Novas Funcionalidades

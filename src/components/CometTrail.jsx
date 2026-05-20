@@ -1,49 +1,55 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export function CometTrail() {
-  const [glowPos, setGlowPos] = useState({ x: -100, y: -100 });
-
   useEffect(() => {
-    const handleMove = (e) => {
-      const x = e.clientX || (e.touches && e.touches[0].clientX);
-      const y = e.clientY || (e.touches && e.touches[0].clientY);
+    // 1. Cria a Estrela Fixa do Ponteiro
+    const cursorStar = document.createElement('div');
+    cursorStar.className = 'cursor-star';
+    document.body.appendChild(cursorStar);
 
-      if (x === undefined || y === undefined) return;
+    let lastDrawTime = 0; // Variável para controlar a velocidade do rastro
 
-      setGlowPos({ x, y });
-
-      const star = document.createElement('div');
-      star.className = 'comet-dust';
+    const createDust = (x, y) => {
+      const dust = document.createElement('div');
+      dust.className = 'comet-dust';
       
-      const size = Math.random() * 4 + 2; 
-      star.style.width = `${size}px`;
-      star.style.height = `${size}px`;
-      star.style.left = `${x}px`;
-      star.style.top = `${y}px`;
+      dust.style.left = `${x}px`;
+      dust.style.top = `${y}px`;
+      dust.style.setProperty('--spread-x', `${(Math.random() - 0.5) * 80}px`);
+      dust.style.setProperty('--spread-y', `${(Math.random() - 0.5) * 80}px`);
 
-      star.style.setProperty('--spread-x', `${Math.random() * 40 - 20}px`);
-      star.style.setProperty('--spread-y', `${Math.random() * 40 - 20}px`);
-
-      document.body.appendChild(star);
+      document.body.appendChild(dust);
 
       setTimeout(() => {
-        star.remove();
+        if (document.body.contains(dust)) {
+          document.body.removeChild(dust);
+        }
       }, 600);
     };
 
-    window.addEventListener('mousemove', handleMove);
-    window.addEventListener('touchmove', handleMove);
+    const handleMouseMove = (e) => {
+      // A estrela principal atualiza a posição imediatamente
+      cursorStar.style.left = `${e.clientX}px`;
+      cursorStar.style.top = `${e.clientY}px`;
+
+      const now = Date.now();
+      // O rastro só é criado se tiver passado 30ms desde a última bolinha
+      // Isso impede que o navegador engasgue com milhares de divs invisíveis
+      if (now - lastDrawTime > 30) {
+        createDust(e.clientX, e.clientY);
+        lastDrawTime = now;
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
-      window.removeEventListener('mousemove', handleMove);
-      window.removeEventListener('touchmove', handleMove);
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (document.body.contains(cursorStar)) {
+        document.body.removeChild(cursorStar);
+      }
     };
   }, []);
 
-  return (
-    <div 
-      className="lunar-glow" 
-      style={{ left: glowPos.x, top: glowPos.y }}
-    ></div>
-  );
+  return null;
 }
