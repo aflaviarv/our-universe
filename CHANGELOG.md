@@ -2,6 +2,18 @@
 
 Acompanhamento detalhado de todas as alterações, correções e evolução da arquitetura do projeto **Our Universe**. O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.0.html).
 
+
+## [1.6.0] - 2026-05-27
+### Adicionado
+- **Segurança:** Implementada expiração automática de 24h para imagens via API do ImgBB.
+- **Usabilidade:** Adicionado Modal de Guia ("Como Usar") no Painel Administrativo.
+- **Estabilidade:** Adicionado bloqueio preventivo (beforeunload) para evitar fechamento acidental da aba com dados não salvos.
+- **Interação:** Implementado fechamento de modais via tecla "Esc".
+- **UX/UI:** Menu de seleção de constelação customizado (removido componente nativo do navegador para padrão visual uniforme).
+- **UX/UI:** Padronização visual dos botões do Painel Administrativo com estilo "pílula" minimalista.
+
+---
+
 ## [1.5.0] - 2026-05-20
 
 ### Novas Funcionalidades
