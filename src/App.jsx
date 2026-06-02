@@ -1,3 +1,4 @@
+// src/App.jsx
 import { useState, useEffect } from 'react';
 import { Home } from './pages/Home.jsx';
 import { Universe } from './pages/Universe.jsx';
@@ -7,14 +8,23 @@ import { DEFAULT_UNIVERSE } from './universe.config.js';
 import { decodeUniverse } from './utils/urlParser.js';
 import './index.css';
 
+// Overlay que segue o estilo da Home
+function WelcomeOverlay({ onOpen }) {
+  return (
+    <div className="welcome-container">
+      <h1>ANATHEUS</h1>
+      <button onClick={onOpen}>Abrir Presente</button>
+    </div>
+  );
+}
+
 function App() {
   const [currentScreen, setCurrentScreen] = useState('home');
   const [universeData, setUniverseData] = useState(DEFAULT_UNIVERSE);
   const [isViewingMode, setIsViewingMode] = useState(false);
   const [constellation, setConstellation] = useState('cancer');
-  
-  // NOVO: Verifica se a pessoa acessou por um link gerado
   const [isGiftLink, setIsGiftLink] = useState(false);
+  const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {
     try {
@@ -27,7 +37,8 @@ function App() {
           setUniverseData(decoded);
           setConstellation(decoded.constellation || 'cancer');
           setIsViewingMode(true);
-          setIsGiftLink(true); // Trava o fluxo para "Presenteado"
+          setIsGiftLink(true);
+          setCurrentScreen('universe');
         }
       }
     } catch (error) {
@@ -35,12 +46,13 @@ function App() {
     }
   }, []);
 
-  // Função para retornar à Home (disponível apenas para não-presenteados)
   const handleGoBack = () => {
     setCurrentScreen('home');
-    // Reseta para o template inicial ao voltar
     setUniverseData(DEFAULT_UNIVERSE);
     setConstellation('cancer');
+    setIsViewingMode(false);
+    setIsGiftLink(false);
+    setIsOpened(false);
   };
 
   return (
@@ -48,11 +60,15 @@ function App() {
       <BackgroundStars />
       <CometTrail />
 
+      {/* A overlay aparece apenas para presenteados antes do clique inicial */}
+      {isGiftLink && !isOpened && (
+        <WelcomeOverlay onOpen={() => setIsOpened(true)} />
+      )}
+
       {currentScreen === 'home' && (
         <Home 
-          isGift={isGiftLink} // Passa a informação para a Home mudar os botões
+          isGift={isGiftLink}
           onChooseMode={(mode) => {
-            // Se for presenteado, sempre será viewer. Se não, depende do botão clicado.
             setIsViewingMode(isGiftLink || mode === 'viewer');
             setCurrentScreen('universe');
           }} 
@@ -65,7 +81,10 @@ function App() {
           constellation={constellation}
           onChangeConstellation={setConstellation}
           isViewingMode={isViewingMode}
-          isGiftLink={isGiftLink} // Passa para o Universo esconder o botão de voltar
+          isGiftLink={isGiftLink}
+          // Passando as novas configurações de música vindas do código decodificado
+          initialBgMusic={universeData.bgMusic || ''}
+          initialMusicStart={universeData.musicStart || '0'}
           onUpdateMemories={(newMemories) => setUniverseData({ ...universeData, memories: newMemories })}
           onGoBack={handleGoBack}
         />

@@ -2,6 +2,27 @@
 
 Acompanhamento detalhado de todas as alterações, correções e evolução da arquitetura do projeto **Our Universe**. O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-06-01
+
+### Novas Funcionalidades
+- **Sistema de Áudio Imersivo:** Implementação de player invisível (iFrame YouTube) no componente `Universe.jsx`, permitindo a execução de música de fundo em *loop* infinito.
+- **Configuração de Timestamp:** Adicionado controle preciso de início da música no painel administrativo, com interface intuitiva que permite ao administrador visualizar o vídeo e definir o momento exato de reprodução (suporta formato `M:SS`).
+- **Orquestração de Autoplay:** Integração da `WelcomeOverlay` no fluxo de acesso via link de presente, garantindo a interação obrigatória do usuário para a liberação do áudio pelos navegadores modernos (*Autoplay Policy Compliance*).
+- **UX de Configuração de Mídia:** Criação de modal dedicado `🎵 Configurar Música` no painel administrativo, isolando as configurações de áudio da área de edição, permitindo testes de reprodução (Preview) e mantendo o ambiente de edição silencioso.
+
+### Refatoração e Otimizações
+- **Arquitetura de Estilização:** Migração completa de estilos `inline` (`style={{...}}`) para classes CSS externas no `index.css`, garantindo consistência visual e conformidade com as boas práticas de desenvolvimento web.
+- **Hierarquia de Camadas (Z-Index):** Refatoração da ordem de renderização no `App.jsx` para assegurar que as estrelas (`BackgroundStars`) e constelações permaneçam sempre visíveis por trás da `WelcomeOverlay`.
+- **Coreografia de Entrada:** Ajuste de sequenciamento de animações na `WelcomeOverlay`, sincronizando o *delay* do botão de interação com o término da animação do título principal (*logoIntro*).
+
+### Correções de Bugs
+- **Conflito de Background:** Resolvida a falha onde a `WelcomeOverlay` impedia a visualização das estrelas de fundo e constelações devido a conflitos de opacidade e *z-index*.
+- **Otimização de Performance:** Remoção de carga desnecessária de estilos nos componentes `.jsx`, consolidando a lógica de design puramente no `index.css`.
+- **Persistência de Estado:** Garantida a propagação das novas propriedades `bgMusic` e `musicStart` através da estrutura de `decodeUniverse` e estado do `App.jsx`.
+
+
+---
+
 
 ## [1.6.0] - 2026-05-27
 ### Adicionado
